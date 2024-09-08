@@ -2,7 +2,7 @@ interface ZIF_PARSE_FORMULA
   public .
 
 
-  methods CALUCALTE
+  methods CALCULATE
     importing
       !IV_FORMULA type ZPARSER_E_FORMULA
       !IO_CONSUMER type ref to ZIF_PARSE_FORMULA_CONSUMER

@@ -1,7 +1,6 @@
 CLASS lcl_consumer DEFINITION.
   PUBLIC SECTION.
     INTERFACES zif_parse_formula_consumer.
-*    METHODS zif_parse_formula_consumer~get_operand.
 ENDCLASS.
 
 CLASS lcl_consumer IMPLEMENTATION.
@@ -78,10 +77,10 @@ CLASS tcl_parse_formula DEFINITION FOR TESTING
     CLASS-METHODS: class_teardown.
     METHODS: setup.
     METHODS: teardown.
-    METHODS: p_calucalte FOR TESTING.
-    METHODS: n_calucalte FOR TESTING.
-    METHODS: p_calucalte_tab FOR TESTING.
-    METHODS: n_calucalte_tab FOR TESTING.
+    METHODS: p_calculate FOR TESTING.
+    METHODS: n_calculate FOR TESTING.
+    METHODS: p_calculate_tab FOR TESTING.
+    METHODS: n_calculate_tab FOR TESTING.
 ENDCLASS.       "tcl_Parse_Formula
 
 
@@ -120,35 +119,35 @@ CLASS tcl_parse_formula IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD p_calucalte.
+  METHOD p_calculate.
 
     TRY.
         cl_abap_unit_assert=>assert_equals(
-          act   = mo_main->calucalte( iv_formula  = ''
+          act   = mo_main->calculate( iv_formula  = ''
                                       io_consumer = mo_consumer )
           exp   = 0 ).
 
         cl_abap_unit_assert=>assert_equals(
-          act   = mo_main->calucalte( iv_formula  = '11'
+          act   = mo_main->calculate( iv_formula  = '11'
                                       io_consumer = mo_consumer )
           exp   = 11 ).
 
         cl_abap_unit_assert=>assert_equals(
-          act   = mo_main->calucalte( iv_formula  = '-11'
+          act   = mo_main->calculate( iv_formula  = '-11'
                                       io_consumer = mo_consumer )
           exp   = -11 ).
 
         cl_abap_unit_assert=>assert_equals(
-          act   = mo_main->calucalte( iv_formula  = '11 + 12'
+          act   = mo_main->calculate( iv_formula  = '11 + 12'
                                       io_consumer = mo_consumer )
           exp   = 23 ).
         cl_abap_unit_assert=>assert_equals(
-          act   = mo_main->calucalte( iv_formula  = '11+12-13'
+          act   = mo_main->calculate( iv_formula  = '11+12-13'
                                       io_consumer = mo_consumer )
           exp   = 10 ).
 
         cl_abap_unit_assert=>assert_equals(
-          act   = mo_main->calucalte( iv_formula  = '11+12+13'
+          act   = mo_main->calculate( iv_formula  = '11+12+13'
                                       io_consumer = mo_consumer )
           exp   = 36 ).
       CATCH zcx_parse_formula INTO DATA(lx_error).
@@ -157,10 +156,10 @@ CLASS tcl_parse_formula IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD n_calucalte.
+  METHOD n_calculate.
     TRY.
         cl_abap_unit_assert=>assert_equals(
-          act   = mo_main->calucalte( iv_formula  = '11+12+13+a'
+          act   = mo_main->calculate( iv_formula  = '11+12+13+a'
                                       io_consumer = mo_consumer )
           exp   = 0 ).
         cl_abap_unit_assert=>fail( 'Fail' ).
@@ -168,18 +167,18 @@ CLASS tcl_parse_formula IMPLEMENTATION.
     ENDTRY.
   ENDMETHOD.
 
-  METHOD p_calucalte_tab.
+  METHOD p_calculate_tab.
     TRY.
         cl_abap_unit_assert=>assert_equals(
-          act   = mo_main->calucalte( iv_formula  = '9'
+          act   = mo_main->calculate( iv_formula  = '9'
                                       io_consumer = mo_consumer_tab )
           exp   = 109 ).
         cl_abap_unit_assert=>assert_equals(
-          act   = mo_main->calucalte( iv_formula  = '10+11'
+          act   = mo_main->calculate( iv_formula  = '10+11'
                                       io_consumer = mo_consumer_tab )
           exp   = 221 ).
         cl_abap_unit_assert=>assert_equals(
-          act   = mo_main->calucalte( iv_formula  = '11+12-13'
+          act   = mo_main->calculate( iv_formula  = '11+12-13'
                                       io_consumer = mo_consumer_tab )
           exp   = 110 ).
       CATCH zcx_parse_formula INTO DATA(lx_error).
@@ -187,10 +186,10 @@ CLASS tcl_parse_formula IMPLEMENTATION.
     ENDTRY.
   ENDMETHOD.
 
-  METHOD n_calucalte_tab.
+  METHOD n_calculate_tab.
     TRY.
         cl_abap_unit_assert=>assert_equals(
-          act   = mo_main->calucalte( iv_formula  = '9+8'
+          act   = mo_main->calculate( iv_formula  = '9+8'
                                       io_consumer = mo_consumer_tab )
           exp   = 0 ).
         cl_abap_unit_assert=>fail( 'Fail' ).

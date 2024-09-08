@@ -1,37 +1,37 @@
-class ZCL_PARSE_FORMULA definition
-  public
-  create private .
+CLASS zcl_parse_formula DEFINITION
+  PUBLIC
+  CREATE PRIVATE .
 
-public section.
+  PUBLIC SECTION.
 
-  interfaces ZIF_PARSE_FORMULA .
+    INTERFACES zif_parse_formula .
 
-  class-methods GET_INSTANCE
-    returning
-      value(RO_INSTANCE) type ref to ZIF_PARSE_FORMULA .
-protected section.
-PRIVATE SECTION.
+    CLASS-METHODS get_instance
+      RETURNING
+        VALUE(ro_instance) TYPE REF TO zif_parse_formula .
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 
-  CONSTANTS gc_sum TYPE char4 VALUE 'SUM(' ##NO_TEXT.
-  CONSTANTS gc_separator TYPE c VALUE ',' ##NO_TEXT.
-  CONSTANTS gc_asterisk TYPE c VALUE '*' ##NO_TEXT.
-  CONSTANTS gc_open_brace TYPE c VALUE '(' ##NO_TEXT.
-  CONSTANTS gc_close_brace TYPE c VALUE ')' ##NO_TEXT.
-  CONSTANTS gc_zero TYPE c VALUE '0' ##NO_TEXT.
-  CONSTANTS gc_plus TYPE c VALUE '+' ##NO_TEXT.
-  CONSTANTS gc_minus TYPE c VALUE '-' ##NO_TEXT.
-  CONSTANTS gc_mult TYPE c VALUE '*' ##NO_TEXT.
-  CONSTANTS gc_div TYPE c VALUE '/' ##NO_TEXT.
-  CLASS-DATA so_instance TYPE REF TO zif_parse_formula.
+    CONSTANTS gc_sum TYPE char4 VALUE 'SUM(' ##NO_TEXT.
+    CONSTANTS gc_separator TYPE c VALUE ',' ##NO_TEXT.
+    CONSTANTS gc_asterisk TYPE c VALUE '*' ##NO_TEXT.
+    CONSTANTS gc_open_brace TYPE c VALUE '(' ##NO_TEXT.
+    CONSTANTS gc_close_brace TYPE c VALUE ')' ##NO_TEXT.
+    CONSTANTS gc_zero TYPE c VALUE '0' ##NO_TEXT.
+    CONSTANTS gc_plus TYPE c VALUE '+' ##NO_TEXT.
+    CONSTANTS gc_minus TYPE c VALUE '-' ##NO_TEXT.
+    CONSTANTS gc_mult TYPE c VALUE '*' ##NO_TEXT.
+    CONSTANTS gc_div TYPE c VALUE '/' ##NO_TEXT.
+    CLASS-DATA so_instance TYPE REF TO zif_parse_formula.
 
-  METHODS get_operand
-    IMPORTING
-      !iv_formula      TYPE zparser_e_formula
-      !io_consumer     TYPE REF TO zif_parse_formula_consumer
-    RETURNING
-      VALUE(rv_result) TYPE wrbtr
-    RAISING
-      zcx_parse_formula .
+    METHODS get_operand
+      IMPORTING
+        !iv_formula      TYPE zparser_e_formula
+        !io_consumer     TYPE REF TO zif_parse_formula_consumer
+      RETURNING
+        VALUE(rv_result) TYPE wrbtr
+      RAISING
+        zcx_parse_formula .
 ENDCLASS.
 
 
@@ -61,7 +61,7 @@ CLASS ZCL_PARSE_FORMULA IMPLEMENTATION.
   ENDMETHOD.
 
 
-  METHOD zif_parse_formula~calucalte.
+  METHOD zif_parse_formula~calculate.
     IF iv_formula IS INITIAL.
       RETURN.
     ENDIF.
@@ -78,7 +78,7 @@ CLASS ZCL_PARSE_FORMULA IMPLEMENTATION.
         IF lv_end <> lv_beg.
           lv_operand_len = lv_end - lv_beg.
           lv_formula = iv_formula+lv_beg(lv_operand_len).
-          rv_result = rv_result + zif_parse_formula~calucalte( iv_formula = lv_formula io_consumer = io_consumer ).
+          rv_result = rv_result + zif_parse_formula~calculate( iv_formula = lv_formula io_consumer = io_consumer ).
         ENDIF.
         lv_beg = lv_end.
       ENDIF.
